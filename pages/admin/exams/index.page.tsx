@@ -12,6 +12,6 @@ const Exams: NextPageWithAuth = () => {
     )
 }
 
-Exams.authPattern = {requireAuth: true, requireEmptyToken: false}
+Exams.authPattern = {requireAuth: false, requireEmptyToken: false}
 
 export default Exams

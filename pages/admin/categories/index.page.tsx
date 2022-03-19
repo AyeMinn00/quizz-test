@@ -12,6 +12,6 @@ const Categories: NextPageWithAuth = () => {
     )
 }
 
-Categories.authPattern = {requireAuth: true, requireEmptyToken: false}
+Categories.authPattern = {requireAuth: false, requireEmptyToken: false}
 
 export default Categories

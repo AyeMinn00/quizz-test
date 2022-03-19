@@ -12,6 +12,6 @@ const Questions: NextPageWithAuth = () => {
     )
 }
 
-Questions.authPattern = {requireAuth: true, requireEmptyToken: false}
+Questions.authPattern = {requireAuth: false, requireEmptyToken: false}
 
 export default Questions
