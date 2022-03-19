@@ -34,7 +34,6 @@ export const DrawerComponent = (props: DrawerComponentProps) => {
         </div>
     )
 
-
     return (
         <Box
             component="nav"

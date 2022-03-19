@@ -4,6 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
+import {useRouter} from "next/router";
 
 type NavbarItemProps = {
     name: string
@@ -13,12 +14,20 @@ type NavbarItemProps = {
 }
 
 export const NavbarItem = ({name, handleClick,  selected , link}: NavbarItemProps) => {
+
+    const router = useRouter()
+
+    const onListItemClick = () =>{
+        handleClick()
+        router.push(link)
+    }
+
     return (
         <ListItem disablePadding>
             <ListItemButton
                 selected={selected}
-                onClick={handleClick}
-                component="a" href={link}>
+                onClick={onListItemClick}>
+                {/*// component="a" href={link}>*/}
                 <ListItemIcon>
                     <InboxIcon/>
                 </ListItemIcon>
