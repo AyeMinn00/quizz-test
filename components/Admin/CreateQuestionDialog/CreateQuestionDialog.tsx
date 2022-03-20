@@ -11,6 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
+import {SelectCategory} from "./SelectCategory";
 
 export interface CreateQuestionDialogProps {
     open: boolean,
@@ -19,23 +20,49 @@ export interface CreateQuestionDialogProps {
 
 const schema = yup.object().shape({
     title: yup.string().required("Enter Title"),
-    category_id: yup.number().required("Enter category"),
-    // options: yup.array().required("Enter options").min(3)
+    correctOption: yup.string().required("Enter Correct Option"),
+    incorrectOption1: yup.string().required("Enter Incorrect Option"),
+    incorrectOption2: yup.string().required("Enter Incorrect Option"),
+    incorrectOption3: yup.string().required("Enter Incorrect Option"),
 })
+
+
+interface CreateQuestionInput {
+    title: string
+    correctOption: string
+    incorrectOption1: string
+    incorrectOption2: string
+    incorrectOption3: string
+}
 
 export const CreateQuestionDialog = (props: CreateQuestionDialogProps) => {
 
     const {open, onClose} = props
-    const {register, handleSubmit, formState} = useForm<CreateQuestionRequest>({
+    const [categoryId, setCategoryId] = React.useState<number | undefined>()
+    const [noCategoryError, setNoCategoryError] = React.useState(false)
+    const {register, handleSubmit, formState, reset} = useForm<CreateQuestionInput>({
         resolver: yupResolver(schema),
         mode: "onChange"
     })
     const {errors} = formState;
-    console.log((errors))
 
-    const onFormSubmit: SubmitHandler<CreateQuestionRequest> = (data) => {
-        console.log("create question")
-        createQuestion(data)
+    const onFormSubmit: SubmitHandler<CreateQuestionInput> = (data) => {
+        if (categoryId !== undefined) {
+            setNoCategoryError(false)
+            const request = {
+                title: data.title,
+                category_id: categoryId,
+                options: [
+                    {answer: data.correctOption, state : true},
+                    {answer: data.incorrectOption1, state : false},
+                    {answer: data.incorrectOption2, state : false},
+                    {answer: data.incorrectOption3, state : false},
+                ]
+            }
+            createQuestion(request)
+        } else {
+            setNoCategoryError(true)
+        }
     }
 
     const createQuestion = (data: CreateQuestionRequest) => {
@@ -44,12 +71,107 @@ export const CreateQuestionDialog = (props: CreateQuestionDialogProps) => {
 
             }).catch((err: Error) => {
 
+        }).finally(() => {
+            reset({
+                title: "",
+                correctOption : "",
+                incorrectOption1 : "",
+                incorrectOption2 : "",
+                incorrectOption3 : "",
+            })
         })
     }
 
     const handleClose = () => {
         onClose(false)
+        setCategoryId(undefined)
+        reset({
+            title: "",
+            correctOption : "",
+            incorrectOption1 : "",
+            incorrectOption2 : "",
+            incorrectOption3 : "",
+        })
     }
+
+    const onLoading = (result: boolean) => {
+        // setLoading(result)
+    }
+
+    const setCategory = (id: number) => {
+        setCategoryId(id)
+        setNoCategoryError(false)
+    }
+
+    const dataUi = <Stack spacing={2}>
+        <TextField
+            id="title"
+            label="Title"
+            fullWidth
+            size="small"
+            variant="outlined"
+            {...register("title")}
+            error={!!errors.title}
+            helperText={
+                errors.title ? errors.title.message : ""
+            }
+        />
+
+        <SelectCategory onLoading={onLoading} setCategory={setCategory} inputError={noCategoryError}/>
+
+        <TextField
+            id="option"
+            label="Correct Option"
+            fullWidth
+            size="small"
+            variant="outlined"
+            {...register("correctOption")}
+            error={!!errors.correctOption}
+            helperText={
+                errors.correctOption ? errors.correctOption.message : ""
+            }
+        />
+
+        <TextField
+            id="incorrectOption1"
+            label="Incorrect Option"
+            fullWidth
+            size="small"
+            variant="outlined"
+            {...register("incorrectOption1")}
+            error={!!errors.incorrectOption1}
+            helperText={
+                errors.incorrectOption1 ? errors.incorrectOption1.message : ""
+            }
+        />
+
+        <TextField
+            id="incorrectOption2"
+            label="Incorrect Option"
+            fullWidth
+            size="small"
+            variant="outlined"
+            {...register("incorrectOption2")}
+            error={!!errors.incorrectOption2}
+            helperText={
+                errors.incorrectOption2 ? errors.incorrectOption2.message : ""
+            }
+        />
+
+        <TextField
+            id="incorrectOption3"
+            label="Incorrect Option"
+            fullWidth
+            size="small"
+            variant="outlined"
+            {...register("incorrectOption3")}
+            error={!!errors.incorrectOption3}
+            helperText={
+                errors.incorrectOption3 ? errors.incorrectOption3.message : ""
+            }
+        />
+
+    </Stack>
 
     return <Dialog open={open} onClose={handleClose} fullWidth
                    sx={{
@@ -65,30 +187,11 @@ export const CreateQuestionDialog = (props: CreateQuestionDialogProps) => {
             <CloseIcon/>
         </IconButton>
         <DialogContent>
-            <Stack spacing={2}>
-                <TextField
-                    id="title"
-                    label="Title"
-                    fullWidth
-                    variant="outlined"
-                    {...register("title")}
-                    error={!!errors.title}
-                    helperText={
-                        errors.title ? errors.title.message : ""
-                    }
-                />
-                <TextField
-                    id="category_id"
-                    label="Category"
-                    fullWidth
-                    variant="outlined"
-                    {...register("category_id")}
-                    error={!!errors.category_id}
-                    helperText={
-                        errors.category_id ? errors.category_id.message : ""
-                    }
-                />
-            </Stack>
+
+            {
+                dataUi
+            }
+
         </DialogContent>
         <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>

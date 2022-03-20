@@ -27,7 +27,6 @@ export const NavbarItem = ({name, handleClick,  selected , link}: NavbarItemProp
             <ListItemButton
                 selected={selected}
                 onClick={onListItemClick}>
-                {/*// component="a" href={link}>*/}
                 <ListItemIcon>
                     <InboxIcon/>
                 </ListItemIcon>
