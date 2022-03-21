@@ -10,6 +10,7 @@ import {NavItem, useNavItems} from "../../../constants/navs";
 
 
 export interface AppBarComponentProps {
+    drawerWidth : number
     handleDrawerToggle: () => void
     handleCreateCategoryDialog: () => void
     handleCreateQuestionDialog: () => void
@@ -19,6 +20,7 @@ export interface AppBarComponentProps {
 export const AppBarComponent = (props: AppBarComponentProps) => {
 
     const {
+        drawerWidth,
         handleDrawerToggle,
         handleCreateCategoryDialog,
         handleCreateQuestionDialog,
@@ -37,7 +39,11 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
 
     return (
         <AppBar
-            position="relative"
+            position="fixed"
+            sx={{
+                width: { sm: `calc(100% - ${drawerWidth}px)` },
+                ml: { sm: `${drawerWidth}px` },
+            }}
             elevation={2}>
             <Toolbar>
                 <IconButton

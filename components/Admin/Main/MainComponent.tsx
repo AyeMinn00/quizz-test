@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box} from "@mui/material";
+import {Box, Toolbar} from "@mui/material";
 import {CreateQuestionDialog} from "../CreateQuestionDialog/CreateQuestionDialog";
 import {CreateCategoryDialog} from "../CreateCategoryDialog/CreateCategoryDialog";
 import {AppBarComponent} from "./AppBarComponent";
@@ -48,66 +48,90 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
         setOpenCreateExamDialog(false)
     }
 
-
     return (
-        <>
-            <Box sx={{
-                display: 'flex',
-                height: '100vh',
-                overflowY: 'hidden',
-            }}>
+        <Box>
 
-                {/* Drawer */}
-                <DrawerComponent
-                    drawerWidth={drawerWidth}
-                    mobileOpen={mobileOpen}
-                    handleDrawerToggle={handleDrawerToggle}
-                    handleListItemClick={handleListItemClick}/>
+            {/* AppBar */}
+            <AppBarComponent
+                drawerWidth={drawerWidth}
+                handleDrawerToggle={handleDrawerToggle}
+                handleCreateCategoryDialog={handleCreateCategoryDialog}
+                handleCreateQuestionDialog={handleCreateQuestionDialog}
+                handleCreateExamDialog={handleCreateExamDialog}
+            />
 
-                {/* body */}
-                <Box component="main"
-                     sx={{
-                         flexGrow: 1,
-                         width: {
-                             xs: '100vw',
-                             sm: `calc(100%-${drawerWidth}px)`
-                         }
-                     }}>
+            {/* Drawer */}
+            <DrawerComponent
+                drawerWidth={drawerWidth}
+                mobileOpen={mobileOpen}
+                handleDrawerToggle={handleDrawerToggle}
+                handleListItemClick={handleListItemClick}/>
 
-                    {/* AppBar */}
-                    <AppBarComponent
-                        handleDrawerToggle={handleDrawerToggle}
-                        handleCreateCategoryDialog={handleCreateCategoryDialog}
-                        handleCreateQuestionDialog={handleCreateQuestionDialog}
-                        handleCreateExamDialog={handleCreateExamDialog}
-                    />
+            {/* Content */}
+            <Box
+                component="main"
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: {sm: `calc(100% - ${drawerWidth}px)`},
+                    ml: {sm: `${drawerWidth}px`},
+                    height: '100vh',
+                    overflow: 'hidden'
+                }}>
 
-                    {/* Content */}
-                    <Box
-                        sx={{
-                            height: `calc(100% - 64px)`,
-                            display: 'flex',
-                            justifyContent: 'center',
-                        }}>
-                        <Box
-                            sx={{
-                                overflowX: 'hidden',
-                                maxWidth: 'lg',
-                                flexGrow: '1'
-                            }}>
-                            {children}
-                        </Box>
+                <Box>
+                    <Toolbar/>
+                </Box>
+
+                <Box sx={{
+                    p: {xs: 2, sm: 3, md: 4},
+                    flexGrow: 1,
+                    overflow: 'auto',
+                }}>
+                    <Box sx={{
+                        display: { sm : 'block' , md : 'flex'},
+                        justifyContent: 'center',
+                    }}>
+                        {children}
                     </Box>
                 </Box>
 
             </Box>
+
+
             <CreateCategoryDialog open={openCreateCategoryDialog} onClose={closeCreateCategoryDialog}/>
             <CreateQuestionDialog open={openCreateQuestionDialog} onClose={closeCreateQuestionDialog}/>
             <CreateExamDialog open={openCreateExamDialog} onClose={closeCreateExamDialog}/>
-        </>
+        </Box>
     )
 
 }
 
 export default MainComponent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
