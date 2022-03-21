@@ -1,6 +1,19 @@
 
-import {CATEGORIES_URL, LOGIN_URL, QUESTION_URL, QUESTION_WITH_ANSWER_URL, REGISTER_URL} from '../../constants/api.urls'
-import {CreateCategoryRequest, CreateQuestionRequest, LoginRequest, RegisterRequest} from '../types/request'
+import {
+    CATEGORIES_URL,
+    EXAM_URL,
+    LOGIN_URL,
+    QUESTION_URL,
+    QUESTION_WITH_ANSWER_URL,
+    REGISTER_URL
+} from '../../constants/api.urls'
+import {
+    CreateCategoryRequest,
+    CreateExamRequest,
+    CreateQuestionRequest,
+    LoginRequest,
+    RegisterRequest
+} from '../types/request'
 import client from './httpClient'
 
 
@@ -36,6 +49,14 @@ class APIService {
 
     getQuestionWithAnswer(){
         return client.get(QUESTION_WITH_ANSWER_URL)
+    }
+
+    getExam(){
+        return client.get(EXAM_URL)
+    }
+
+    createExam(data : CreateExamRequest){
+        return client.post(EXAM_URL , data)
     }
 
 }

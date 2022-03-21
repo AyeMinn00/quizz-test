@@ -6,7 +6,9 @@ import {Stack} from "@mui/material";
 export const QuestionList = ({questions}: { questions: AdminQuestionModel[] }) => {
 
     return (
-        <Stack spacing={3} overflow={"auto"}>
+        <Stack spacing={3}
+               // overflow={"auto"}
+        >
             {
                 questions.map((q: AdminQuestionModel) => (
                     <QuestionItem question={q} key={q.id}/>

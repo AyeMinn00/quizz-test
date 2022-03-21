@@ -1,4 +1,10 @@
-import {CreateCategoryRequest, CreateQuestionRequest, LoginRequest, RegisterRequest} from "../types/request"
+import {
+    CreateCategoryRequest,
+    CreateExamRequest,
+    CreateQuestionRequest,
+    LoginRequest,
+    RegisterRequest
+} from "../types/request"
 import apiService from "./apiService"
 import tokenService from "./tokenService"
 
@@ -41,6 +47,16 @@ class Service {
 
     async getQuestionWithAnswer() {
         const response = await apiService.getQuestionWithAnswer()
+        return response.data
+    }
+
+    async getExam(){
+        const response = await  apiService.getExam()
+        return response.data 
+    }
+
+    async createExam(data : CreateExamRequest){
+        const response = await apiService.createExam(data)
         return response.data
     }
 

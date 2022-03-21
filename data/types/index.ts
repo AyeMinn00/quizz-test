@@ -12,6 +12,7 @@ export type NextPageWithAuth<P = {}, IP = P> = NextPage<P, IP> & {
 export type CategoryModel = {
     id : number
     name : string
+    totalquestions : number
 }
 
 export type OptionsModel = {
@@ -28,6 +29,7 @@ export type QuestionModel = {
 export type AdminQuestionModel = {
     id: number,
     title: string,
+    category_name : string,
     options: AdminOptionsModel[]
 }
 
@@ -35,4 +37,16 @@ export type AdminOptionsModel = {
     id : number ,
     answer : string ,
     state : boolean
+}
+
+export type ExamModel = {
+    id : number ,
+    title : string ,
+    examinee_email : string,
+    password : string,
+    slug : string,
+    description : { String : string  },
+    expired_at : string,
+    created_at : string,
+    active : boolean
 }

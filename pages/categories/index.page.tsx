@@ -1,25 +1,35 @@
-import { Grid } from '@mui/material'
+import {Grid} from '@mui/material'
 import * as React from 'react'
-import { ContainerComponent } from '../../components/Container';
+import {ContainerComponent} from '../../components/Container';
 import appService from "../../data/services/service";
-import { Category, CategoryItem } from './CategoryItem';
+import {CategoryItem} from './CategoryItem';
+import {CategoryModel} from "../../data/types";
+import {Box} from "@mui/system";
 
 
-const CategoriesList = ({ categories }: { categories: Category[] }) => {
+const CategoriesList = ({categories}: { categories: CategoryModel[] }) => {
 
     return (
         <ContainerComponent>
-            <Grid container spacing={3}>
-                {
-                    categories?.map((item: Category) => {
-                        return (
-                            <Grid item xs={12} md={6} lg={4} key={item.id}>
-                                <CategoryItem category={item} />
-                            </Grid>
-                        )
-                    })
-                }
-            </Grid>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
+                <Grid container spacing={3}
+                      sx={{
+                          maxWidth: 'lg',
+                      }}>
+                    {
+                        categories?.map((item: CategoryModel) => {
+                            return (
+                                <Grid item xs={12} md={6} lg={4} key={item.id}>
+                                    <CategoryItem category={item}/>
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
+            </Box>
         </ContainerComponent>
     )
 }

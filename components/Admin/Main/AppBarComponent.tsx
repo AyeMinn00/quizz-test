@@ -6,12 +6,14 @@ import * as React from "react";
 import {useRouter} from "next/router";
 import {sameLink} from "../../../utils/util";
 import {links} from "../../../constants/links";
+import {NavItem, useNavItems} from "../../../constants/navs";
 
 
 export interface AppBarComponentProps {
     handleDrawerToggle: () => void
     handleCreateCategoryDialog: () => void
     handleCreateQuestionDialog: () => void
+    handleCreateExamDialog: () => void
 }
 
 export const AppBarComponent = (props: AppBarComponentProps) => {
@@ -19,14 +21,24 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
     const {
         handleDrawerToggle,
         handleCreateCategoryDialog,
-        handleCreateQuestionDialog
+        handleCreateQuestionDialog,
+        handleCreateExamDialog
     } = props
     const router = useRouter()
+    const navItems = useNavItems()
+
+    const getTitle = () => {
+        const value = navItems.find( (item : NavItem) => item.link === router.pathname)
+        if (value !== undefined){
+            return value.name
+        }
+        return ""
+    }
 
     return (
         <AppBar
             position="relative"
-            elevation={1}>
+            elevation={2}>
             <Toolbar>
                 <IconButton
                     color="inherit"
@@ -37,7 +49,9 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
                     <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" sx={{flexGrow: 1, marginRight: '8px'}} component="div">
-                    {`title`}
+                    {
+                        getTitle()
+                    }
                 </Typography>
                 {
                     sameLink(links.adminCategory, router) &&
@@ -53,6 +67,14 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
                                   startIcon={<AddRounded/>}>
                             Create Question
                         </Button>
+                }
+                {
+                    sameLink(links.adminExam, router) &&
+                    <Button variant="outlined" color="secondary"
+                            onClick={handleCreateExamDialog}
+                            startIcon={<AddRounded/>}>
+                        Create Exam
+                    </Button>
                 }
 
             </Toolbar>

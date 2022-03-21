@@ -1,17 +1,21 @@
 import {NextPageWithAuth} from "../../../data/types";
 import MainComponent from "../../../components/Admin/Main/MainComponent";
-import {Exam} from "../../../components/Admin/Exam";
-
+import {ExamListComponent} from "../../../components/Admin/ExamList/ExamListComponent";
+import {Box} from "@mui/system";
 
 const Exams: NextPageWithAuth = () => {
 
     return (
         <MainComponent>
-            <Exam/>
+            <Box sx={{
+                m: 3,
+            }}>
+                <ExamListComponent/>
+            </Box>
         </MainComponent>
     )
 }
 
-Exams.authPattern = {requireAuth: false, requireEmptyToken: false}
+Exams.authPattern = {requireAuth: true, requireEmptyToken: false}
 
 export default Exams

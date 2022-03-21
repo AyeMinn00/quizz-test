@@ -4,6 +4,7 @@ import {CreateQuestionDialog} from "../CreateQuestionDialog/CreateQuestionDialog
 import {CreateCategoryDialog} from "../CreateCategoryDialog/CreateCategoryDialog";
 import {AppBarComponent} from "./AppBarComponent";
 import {DrawerComponent} from "./DrawerComponent";
+import {CreateExamDialog} from "../CreateExamDialog/CreateExamDialog";
 
 const drawerWidth = 240;
 
@@ -12,6 +13,7 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
 
     const [openCreateCategoryDialog, setOpenCreateCategoryDialog] = React.useState(false)
     const [openCreateQuestionDialog, setOpenCreateQuestionDialog] = React.useState(false)
+    const [openCreateExamDialog, setOpenCreateExamDialog] = React.useState(false)
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -20,7 +22,7 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
 
     const handleListItemClick = () => {
         setMobileOpen(false)
-    };
+    }
 
     const handleCreateCategoryDialog = () => {
         setOpenCreateCategoryDialog(!openCreateCategoryDialog)
@@ -30,6 +32,10 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
         setOpenCreateQuestionDialog(!openCreateQuestionDialog)
     }
 
+    const handleCreateExamDialog = () => {
+        setOpenCreateExamDialog(!openCreateExamDialog)
+    }
+
     const closeCreateCategoryDialog = () => {
         setOpenCreateCategoryDialog(false)
     }
@@ -37,6 +43,11 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
     const closeCreateQuestionDialog = () => {
         setOpenCreateQuestionDialog(false)
     }
+
+    const closeCreateExamDialog = () => {
+        setOpenCreateExamDialog(false)
+    }
+
 
     return (
         <>
@@ -57,7 +68,7 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
                 <Box component="main"
                      sx={{
                          flexGrow: 1,
-                         maxWidth: {
+                         width: {
                              xs: '100vw',
                              sm: `calc(100%-${drawerWidth}px)`
                          }
@@ -67,22 +78,32 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
                     <AppBarComponent
                         handleDrawerToggle={handleDrawerToggle}
                         handleCreateCategoryDialog={handleCreateCategoryDialog}
-                        handleCreateQuestionDialog={handleCreateQuestionDialog}/>
+                        handleCreateQuestionDialog={handleCreateQuestionDialog}
+                        handleCreateExamDialog={handleCreateExamDialog}
+                    />
 
                     {/* Content */}
                     <Box
                         sx={{
-                            p: 3,
                             height: `calc(100% - 64px)`,
-                            overflow: 'scroll'
+                            display: 'flex',
+                            justifyContent: 'center',
                         }}>
-                        {children}
+                        <Box
+                            sx={{
+                                overflowX: 'hidden',
+                                maxWidth: 'lg',
+                                flexGrow: '1'
+                            }}>
+                            {children}
+                        </Box>
                     </Box>
                 </Box>
 
             </Box>
             <CreateCategoryDialog open={openCreateCategoryDialog} onClose={closeCreateCategoryDialog}/>
             <CreateQuestionDialog open={openCreateQuestionDialog} onClose={closeCreateQuestionDialog}/>
+            <CreateExamDialog open={openCreateExamDialog} onClose={closeCreateExamDialog}/>
         </>
     )
 

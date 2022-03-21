@@ -1,10 +1,13 @@
-import {ListItem} from "@mui/material";
+import {ListItem, Typography} from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import CategoryIcon from '@mui/icons-material/Category';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import AccessAlarmTwoToneIcon from '@mui/icons-material/AccessAlarmTwoTone';
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import {useRouter} from "next/router";
+import {useLinks} from "../../../constants/links";
 
 type NavbarItemProps = {
     name: string
@@ -16,6 +19,7 @@ type NavbarItemProps = {
 export const NavbarItem = ({name, handleClick,  selected , link}: NavbarItemProps) => {
 
     const router = useRouter()
+    const links = useLinks()
 
     const onListItemClick = () =>{
         handleClick()
@@ -28,9 +32,13 @@ export const NavbarItem = ({name, handleClick,  selected , link}: NavbarItemProp
                 selected={selected}
                 onClick={onListItemClick}>
                 <ListItemIcon>
-                    <InboxIcon/>
+                    { link === links.adminCategory && <CategoryIcon/>}
+                    { link === links.adminQuestion && <QuestionAnswerIcon/>}
+                    { link === links.adminExam && <AccessAlarmTwoToneIcon/>}
                 </ListItemIcon>
-                <ListItemText primary={name}/>
+                <ListItemText primary={
+                    <Typography variant="subtitle1" fontSize="16px" fontWeight="medium">{name}</Typography>
+                }/>
             </ListItemButton>
         </ListItem>
     )
