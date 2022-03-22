@@ -76,7 +76,7 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
                     width: {sm: `calc(100% - ${drawerWidth}px)`},
                     ml: {sm: `${drawerWidth}px`},
                     height: '100vh',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
                 }}>
 
                 <Box>
@@ -85,14 +85,19 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
 
                 <Box sx={{
                     p: {xs: 2, sm: 3, md: 4},
-                    flexGrow: 1,
                     overflow: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
                 }}>
                     <Box sx={{
-                        display: { sm : 'block' , md : 'flex'},
-                        justifyContent: 'center',
+                        maxWidth: 'lg',
+                        width: '100%'   // important , not to overflow width in small screen
                     }}>
-                        {children}
+                        <Box sx={{
+                            pb: {xs: 2, sm: 3, md: 4},
+                        }}>
+                            {children}
+                        </Box>
                     </Box>
                 </Box>
 

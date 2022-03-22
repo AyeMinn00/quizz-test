@@ -41,7 +41,10 @@ export const Categories = ({categories}: { categories: CategoryModel[] }) => {
                                 <TableRow key={cat.id}>
                                     <TableCell>
                                         <Typography variant="subtitle1" fontSize="14px"
-                                                    fontWeight="medium">{cat.name}</Typography>
+                                                    fontWeight="medium"
+                                                    style={{wordWrap: "break-word"}}>
+                                            {cat.name}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell>
                                         <Typography variant="subtitle1" fontSize="14px"
@@ -52,7 +55,7 @@ export const Categories = ({categories}: { categories: CategoryModel[] }) => {
                                             <IconButton aria-label="delete">
                                                 <DeleteIcon/>
                                             </IconButton>
-                                            <IconButton aria-label="edit" >
+                                            <IconButton aria-label="edit">
                                                 <EditIcon/>
                                             </IconButton>
                                         </Stack>

@@ -6,7 +6,9 @@ export const QuestionItem = ({question} : { question : QuestionModel}) => {
 
     return (
         <Stack spacing={1} >
-            <Typography variant="h6" style={{ wordWrap: "break-word" }}>
+            <Typography variant="h6"
+                        style={{ wordWrap: "break-word" }}
+            >
                 {question.title}
             </Typography>
             <OptionList options={question.options}/>

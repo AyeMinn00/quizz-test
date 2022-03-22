@@ -1,11 +1,16 @@
 import {ExamModel} from "../../../data/types";
 import {Stack, Typography} from "@mui/material";
 
-export const ExamItem = ({ exam } : { exam : ExamModel}) =>{
+export const ExamItem = ({exam}: { exam: ExamModel }) => {
 
     return (
         <Stack>
-            <Typography variant="subtitle1" fontSize="18px" fontWeight="medium">{exam.title}</Typography>
+            <Typography variant="subtitle1"
+                        fontSize="18px"
+                        fontWeight="medium"
+                        style={{wordWrap: "break-word"}}>
+                {exam.title}
+            </Typography>
             <ListItem label="Examinee Email" title={exam.examinee_email}/>
             <ListItem label="Password" title={exam.password}/>
             <ListItem label="Description" title={exam.description.String}/>
@@ -16,7 +21,7 @@ export const ExamItem = ({ exam } : { exam : ExamModel}) =>{
     )
 }
 
-const ListItem = ( { label , title } : {label : string , title: string }) => {
+const ListItem = ({label, title}: { label: string, title: string }) => {
     return (
         <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="subtitle1" fontSize="14px">{label}</Typography>
