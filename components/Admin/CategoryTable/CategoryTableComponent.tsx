@@ -8,14 +8,18 @@ export const CategoryTableComponent = () => {
     return (
         <FetchCategory>
             {
-                ({loading, categories}) => (
-                    <>
-                        {
-                            loading ?
-                                <LoadingComponent/>
-                                : <Categories categories={categories}/>}
-                    </>
-                )
+                ({loading, error , data}) => {
+                    console.log("@ FetchCategory , loading is " , loading)
+                    console.log("@ FetchCategory , categories is " , data)
+                    return (
+                        <>
+                            {
+                                loading ?
+                                    <LoadingComponent/>
+                                    : <Categories categories={data}/>}
+                        </>
+                    )
+                }
             }
         </FetchCategory>
     )

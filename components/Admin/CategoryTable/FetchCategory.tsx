@@ -1,33 +1,20 @@
 import React, {useEffect} from "react";
-import {CategoryModel} from "../../../data/types";
-import appService from "../../../data/services/service";
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import {categorySelector, getCategories} from "../../../features/category";
 
-export const FetchCategory = ({children}: { children: (props : any) => JSX.Element }) => {
+export const FetchCategory = ({children}: { children: (props: any) => JSX.Element }) => {
 
-    const [loading, setLoading] = React.useState(true)
-    const [error, setError] = React.useState()
-    const [categories, setCategories] = React.useState<CategoryModel[]>([])
+    const dispatch = useAppDispatch()
+    const {data, loading, error} = useAppSelector(categorySelector)
 
     useEffect(() => {
-        getCategories()
+        dispatch(getCategories())
     }, [])
-
-    const getCategories = () => {
-        setLoading(true)
-        appService.getCategories()
-            .then(response => {
-                setCategories(response)
-            }).catch(err => {
-            setError(err)
-        }).finally(() => {
-            setLoading(false)
-        })
-    }
 
     return (
         <React.Fragment>
             {
-                children({ loading , error , categories})
+                children({loading, error, data})
             }
         </React.Fragment>
     )
