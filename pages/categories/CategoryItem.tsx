@@ -27,11 +27,11 @@ export const CategoryItem = ({category}: { category: CategoryModel }) => {
                         {category.name}
                     </Typography>
                     {
-                        category.totalquestions > 0 ?
+                        category.total_questions > 0 ?
                             <span>
-                                {category.totalquestions}
+                                {category.total_questions}
                                 {
-                                    category.totalquestions == 1 ? ` question` : ` questions`
+                                    category.total_questions == 1 ? ` question` : ` questions`
                                 }
                             </span>
                             :

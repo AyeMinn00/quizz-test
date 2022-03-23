@@ -1,27 +1,26 @@
-import React from "react";
-import {FetchCategory} from "./FetchCategory";
+import React, {useEffect} from "react";
 import {LoadingComponent} from "../../LoadingComponent/LoadingComponent";
 import {Categories} from "./Categories";
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import {categorySelector, getCategories} from "../../../features/category";
 
 export const CategoryTableComponent = () => {
 
+    const dispatch = useAppDispatch()
+    const {data, loading, error} = useAppSelector(categorySelector)
+
+    useEffect(() => {
+        dispatch(getCategories())
+    }, [])
+
     return (
-        <FetchCategory>
+        <>
             {
-                ({loading, error , data}) => {
-                    console.log("@ FetchCategory , loading is " , loading)
-                    console.log("@ FetchCategory , categories is " , data)
-                    return (
-                        <>
-                            {
-                                loading ?
-                                    <LoadingComponent/>
-                                    : <Categories categories={data}/>}
-                        </>
-                    )
-                }
+                loading ?
+                    <LoadingComponent/>
+                    : <Categories categories={data}/>
             }
-        </FetchCategory>
+        </>
     )
 
 }

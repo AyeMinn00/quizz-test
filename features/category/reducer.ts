@@ -1,5 +1,5 @@
 import {CategoryModel} from "../../data/types";
-import {getCategories} from "./actions";
+import {addCategory, getCategories} from "./actions";
 import {AxiosError} from "axios";
 import {createReducer} from "@reduxjs/toolkit";
 
@@ -9,16 +9,8 @@ export type CategoryState = {
     error?: AxiosError
 }
 
-const cats : CategoryModel[] = [
-    {
-        id : 2,
-        name : "cat name",
-        totalquestions : 2909
-    }
-]
-
 const initialState: CategoryState = {
-    data: cats,
+    data: [],
     loading: false,
     error: undefined
 }
@@ -36,7 +28,8 @@ export const categoryReducer = createReducer(initialState, builder => {
             state.loading = false
             state.error = payload
         })
+        .addCase(addCategory , (state , action) => {
+            state.data.unshift(action.payload)
+        })
 
 })
-
-export default categoryReducer

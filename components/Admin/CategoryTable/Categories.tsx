@@ -53,7 +53,7 @@ export const Categories = ({categories}: { categories: CategoryModel[] }) => {
                                                 </TableCell>
                                                 <TableCell>
                                                     <Typography variant="subtitle1" fontSize="14px"
-                                                                fontWeight="medium">{cat.totalquestions}</Typography>
+                                                                fontWeight="medium">{cat.total_questions}</Typography>
                                                 </TableCell>
                                                 <TableCell>
                                                     <Stack direction="row" spacing={0.5}>

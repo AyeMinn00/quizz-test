@@ -2,7 +2,6 @@ import * as yup from 'yup'
 import {SubmitHandler, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {CreateCategoryRequest} from "../../../data/types/request";
-import appService from "../../../data/services/service";
 import React from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,11 +10,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import {Button, IconButton} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import {closeCategoryDialog, selectCategoryDialogOpen} from "../../../features/category_dialog/categoryDialogSlice";
+import {createCategory} from "../../../features/category";
 
-export interface CreateCategoryDialogProps {
-    open: boolean,
-    onClose: (result: boolean) => void
-}
 
 interface CreateCategoryFormInput {
     name: string
@@ -25,9 +23,11 @@ const schema = yup.object().shape({
     name: yup.string().required("Enter Category Name").min(1).max(100)
 })
 
-export const CreateCategoryDialog = (props: CreateCategoryDialogProps) => {
+export const CreateCategoryDialog = () => {
 
-    const {open, onClose} = props
+    const dispatch = useAppDispatch()
+    const openCategoryDialog = useAppSelector(selectCategoryDialogOpen)
+
     const {register, handleSubmit, formState} = useForm<CreateCategoryFormInput>({
         resolver: yupResolver(schema),
         mode: "onChange"
@@ -38,25 +38,19 @@ export const CreateCategoryDialog = (props: CreateCategoryDialogProps) => {
         let request: CreateCategoryRequest = {
             name: data.name
         }
-        createCategory(request)
+        uploadCategory(request)
     }
 
-    const createCategory = (data: CreateCategoryRequest) => {
-        appService.createCategory(data)
-            .then((response: any) => {
-
-            }).catch((err: Error) => {
-
-        })
+    const uploadCategory = (data: CreateCategoryRequest) => {
+        dispatch(createCategory(data))
     }
 
     const handleClose = () => {
-        onClose(false)
-    };
-
+        dispatch(closeCategoryDialog())
+    }
 
     return <div>
-        <Dialog open={open} onClose={handleClose} fullWidth
+        <Dialog open={openCategoryDialog} onClose={handleClose} fullWidth
                 sx={{
                     minWidth: 'md'
                 }}>

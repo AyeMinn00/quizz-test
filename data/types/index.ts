@@ -12,7 +12,7 @@ export type NextPageWithAuth<P = {}, IP = P> = NextPage<P, IP> & {
 export type CategoryModel = {
     id : number
     name : string
-    totalquestions : number
+    total_questions : number
 }
 
 export type OptionsModel = {

@@ -7,12 +7,14 @@ import {useRouter} from "next/router";
 import {sameLink} from "../../../utils/util";
 import {links} from "../../../constants/links";
 import {NavItem, useNavItems} from "../../../constants/navs";
+import {useAppDispatch} from "../../../store/hooks";
+import {openCategoryDialog} from "../../../features/category_dialog/categoryDialogSlice";
 
 
 export interface AppBarComponentProps {
-    drawerWidth : number
+    drawerWidth: number
     handleDrawerToggle: () => void
-    handleCreateCategoryDialog: () => void
+    // handleCreateCategoryDialog: () => void
     handleCreateQuestionDialog: () => void
     handleCreateExamDialog: () => void
 }
@@ -22,27 +24,33 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
     const {
         drawerWidth,
         handleDrawerToggle,
-        handleCreateCategoryDialog,
+        // handleCreateCategoryDialog,
         handleCreateQuestionDialog,
         handleCreateExamDialog
     } = props
     const router = useRouter()
     const navItems = useNavItems()
+    const dispatch = useAppDispatch()
 
     const getTitle = () => {
-        const value = navItems.find( (item : NavItem) => item.link === router.pathname)
-        if (value !== undefined){
+        const value = navItems.find((item: NavItem) => item.link === router.pathname)
+        if (value !== undefined) {
             return value.name
         }
         return ""
+    }
+
+    const handleCreateCategoryDialog = () => {
+        console.log("click create dialog")
+        dispatch(openCategoryDialog())
     }
 
     return (
         <AppBar
             position="fixed"
             sx={{
-                width: { sm: `calc(100% - ${drawerWidth}px)` },
-                ml: { sm: `${drawerWidth}px` },
+                width: {sm: `calc(100% - ${drawerWidth}px)`},
+                ml: {sm: `${drawerWidth}px`},
             }}
             elevation={2}>
             <Toolbar>
@@ -68,11 +76,11 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
                 }
                 {
                     sameLink(links.adminQuestion, router) &&
-                     <Button variant="outlined" color="secondary"
-                                  onClick={handleCreateQuestionDialog}
-                                  startIcon={<AddRounded/>}>
-                            Create Question
-                        </Button>
+                    <Button variant="outlined" color="secondary"
+                            onClick={handleCreateQuestionDialog}
+                            startIcon={<AddRounded/>}>
+                        Create Question
+                    </Button>
                 }
                 {
                     sameLink(links.adminExam, router) &&

@@ -1,13 +1,15 @@
 import {configureStore} from "@reduxjs/toolkit";
-import counterReducer from '../features/counter/counterSlice'
 import {categoryReducer} from "../features/category";
+import categoryDialogReducer from "../features/category_dialog/categoryDialogSlice";
+import {categoryCreateReducer} from "../features/category/createReducer";
 
 export const store = configureStore({
-    reducer : {
-        counter: counterReducer,
-        category : categoryReducer,
+    reducer: {
+        category: categoryReducer,
+        createCategory: categoryCreateReducer,
+        categoryDialog: categoryDialogReducer,
     },
-    middleware: (getDefaultMiddleware ) => getDefaultMiddleware({
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,
     })
 })
