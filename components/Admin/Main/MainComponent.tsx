@@ -88,13 +88,18 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
                     overflow: 'auto',
                     display: 'flex',
                     justifyContent: 'center',
+                    flexGrow : 1,
                 }}>
                     <Box sx={{
                         maxWidth: 'lg',
-                        width: '100%'   // important , not to overflow width in small screen
+                        width: '100%',   // important , not to overflow width in small screen
+                        // background: 'green',
                     }}>
                         <Box sx={{
                             pb: {xs: 2, sm: 3, md: 4},
+                            // background : 'red',
+                            flexGrow : 1,
+                            height : '100%'
                         }}>
                             {children}
                         </Box>

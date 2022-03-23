@@ -8,7 +8,7 @@ export const handlers = [
 
     rest.get(`${url}${CATEGORIES_URL}`,
         (req, res, ctx) => {
-            return res(ctx.json(categories))
+            return res(ctx.json([]))
             // return res(ctx.status(500))
         }),
 

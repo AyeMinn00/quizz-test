@@ -10,8 +10,10 @@ export const CategoryTableComponent = () => {
             {
                 ({loading, categories}) => (
                     <>
-                        {loading && <LoadingComponent/>}
-                        {categories.length && <Categories categories={categories}/>}
+                        {
+                            loading ?
+                                <LoadingComponent/>
+                                : <Categories categories={categories}/>}
                     </>
                 )
             }

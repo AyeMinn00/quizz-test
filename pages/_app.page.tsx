@@ -8,9 +8,9 @@ import Head from "next/head";
 import { AuthGuardComponent } from '../components/AuthGuard/AuthGuardComponent';
 import { UnAuthGuardComponent } from '../components/AuthGuard/UnAuthGuardComponent';
 
-// if (process.env.NODE_ENV === "development") {
-//     require("../mocks");
-// }
+if (process.env.NODE_ENV === "development") {
+    require("../mocks");
+}
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
