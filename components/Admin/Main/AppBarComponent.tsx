@@ -9,13 +9,12 @@ import {links} from "../../../constants/links";
 import {NavItem, useNavItems} from "../../../constants/navs";
 import {useAppDispatch} from "../../../store/hooks";
 import {openCategoryDialog} from "../../../features/category_dialog/categoryDialogSlice";
+import {openQuestionDialog} from "../../../features/question_dialog/questionDialogSlice";
 
 
 export interface AppBarComponentProps {
     drawerWidth: number
     handleDrawerToggle: () => void
-    // handleCreateCategoryDialog: () => void
-    handleCreateQuestionDialog: () => void
     handleCreateExamDialog: () => void
 }
 
@@ -24,8 +23,6 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
     const {
         drawerWidth,
         handleDrawerToggle,
-        // handleCreateCategoryDialog,
-        handleCreateQuestionDialog,
         handleCreateExamDialog
     } = props
     const router = useRouter()
@@ -41,9 +38,13 @@ export const AppBarComponent = (props: AppBarComponentProps) => {
     }
 
     const handleCreateCategoryDialog = () => {
-        console.log("click create dialog")
         dispatch(openCategoryDialog())
     }
+
+    const handleCreateQuestionDialog = () => {
+        dispatch(openQuestionDialog())
+    }
+
 
     return (
         <AppBar

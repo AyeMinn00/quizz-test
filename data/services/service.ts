@@ -37,7 +37,8 @@ class Service {
     }
 
     async createQuestion(data: CreateQuestionRequest) {
-        return await apiService.createQuestion(data)
+        const response =  await apiService.createQuestion(data)
+        return response.data
     }
 
     async getQuestion() {

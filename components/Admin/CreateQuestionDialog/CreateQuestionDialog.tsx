@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 import {SubmitHandler, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import appService from "../../../data/services/service";
 import React from "react";
 import {CreateQuestionRequest} from "../../../data/types/request";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -12,11 +11,9 @@ import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import {SelectCategory} from "./SelectCategory";
-
-export interface CreateQuestionDialogProps {
-    open: boolean,
-    onClose: (result: boolean) => void
-}
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import {closeQuestionDialog, selectQuestionDialogOpen} from "../../../features/question_dialog/questionDialogSlice";
+import {createQuestion} from "../../../features/question";
 
 const schema = yup.object().shape({
     title: yup.string().required("Enter Title"),
@@ -26,7 +23,6 @@ const schema = yup.object().shape({
     incorrectOption3: yup.string().required("Enter Incorrect Option"),
 })
 
-
 interface CreateQuestionInput {
     title: string
     correctOption: string
@@ -35,9 +31,10 @@ interface CreateQuestionInput {
     incorrectOption3: string
 }
 
-export const CreateQuestionDialog = (props: CreateQuestionDialogProps) => {
+export const CreateQuestionDialog = () => {
 
-    const {open, onClose} = props
+    const dispatch = useAppDispatch()
+    const openQuestionDialog = useAppSelector(selectQuestionDialogOpen)
     const [categoryId, setCategoryId] = React.useState<number | undefined>()
     const [noCategoryError, setNoCategoryError] = React.useState(false)
     const {register, handleSubmit, formState, reset} = useForm<CreateQuestionInput>({
@@ -59,31 +56,32 @@ export const CreateQuestionDialog = (props: CreateQuestionDialogProps) => {
                     {answer: data.incorrectOption3, state : false},
                 ]
             }
-            createQuestion(request)
+            uploadQuestion(request)
         } else {
             setNoCategoryError(true)
         }
     }
 
-    const createQuestion = (data: CreateQuestionRequest) => {
-        appService.createQuestion(data)
-            .then((response: any) => {
-
-            }).catch((err: Error) => {
-
-        }).finally(() => {
-            reset({
-                title: "",
-                correctOption : "",
-                incorrectOption1 : "",
-                incorrectOption2 : "",
-                incorrectOption3 : "",
-            })
-        })
+    const uploadQuestion = (data: CreateQuestionRequest) => {
+        dispatch(createQuestion(data))
+        // appService.createQuestion(data)
+        //     .then((response: any) => {
+        //
+        //     }).catch((err: Error) => {
+        //
+        // }).finally(() => {
+        //     reset({
+        //         title: "",
+        //         correctOption : "",
+        //         incorrectOption1 : "",
+        //         incorrectOption2 : "",
+        //         incorrectOption3 : "",
+        //     })
+        // })
     }
 
     const handleClose = () => {
-        onClose(false)
+        dispatch(closeQuestionDialog())
         setCategoryId(undefined)
         reset({
             title: "",
@@ -173,7 +171,7 @@ export const CreateQuestionDialog = (props: CreateQuestionDialogProps) => {
 
     </Stack>
 
-    return <Dialog open={open} onClose={handleClose} fullWidth
+    return <Dialog open={openQuestionDialog} onClose={handleClose} fullWidth
                    sx={{
                        minWidth: 'md'
                    }}>

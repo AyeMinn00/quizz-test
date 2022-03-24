@@ -23,16 +23,8 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
         setMobileOpen(false)
     }
 
-    const handleCreateQuestionDialog = () => {
-        setOpenCreateQuestionDialog(!openCreateQuestionDialog)
-    }
-
     const handleCreateExamDialog = () => {
         setOpenCreateExamDialog(!openCreateExamDialog)
-    }
-
-    const closeCreateQuestionDialog = () => {
-        setOpenCreateQuestionDialog(false)
     }
 
     const closeCreateExamDialog = () => {
@@ -46,8 +38,6 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
             <AppBarComponent
                 drawerWidth={drawerWidth}
                 handleDrawerToggle={handleDrawerToggle}
-                // handleCreateCategoryDialog={handleCreateCategoryDialog}
-                handleCreateQuestionDialog={handleCreateQuestionDialog}
                 handleCreateExamDialog={handleCreateExamDialog}
             />
 
@@ -102,8 +92,7 @@ const MainComponent = ({children}: { children: JSX.Element }) => {
 
             <CreateCategoryDialog/>
 
-            <CreateQuestionDialog open={openCreateQuestionDialog}
-                                  onClose={closeCreateQuestionDialog}/>
+            <CreateQuestionDialog/>
             <CreateExamDialog open={openCreateExamDialog} onClose={closeCreateExamDialog}/>
         </Box>
     )
